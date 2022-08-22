@@ -19,15 +19,28 @@ GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('love_sandwiches')
 
 def get_sales_data():
-    """ Get sales figures input from the user """
-    print("Please enter sales data from the last marlet.")
-    print("Data should be six numbers, separated by commas.")
-    print("Example: 10,20,30,40,50,60\n")           # \n will add a row here
+    """ 
+    Get sales figures input from the user 
+    """
+    # adding a while loop so that we are not needing to run the programm manually all the time
+    # and it will stop once the required parametres are satisfied (6 integers numbers)
+    while True:
 
-    data_str = input("Enter your data here: ")
-    #split method returns the broken up values as a list
-    sales_data = data_str.split(",")
-    validate_data(sales_data)
+        print("Please enter sales data from the last marlet.")
+        print("Data should be six numbers, separated by commas.")
+        print("Example: 10,20,30,40,50,60\n")           # \n will add a row here
+
+        data_str = input("Enter your data here: ")
+        #split method returns the broken up values as a list
+        sales_data = data_str.split(",")
+        
+
+        if validate_data(sales_data):
+            print("Data is valid!")
+            break
+    
+    return sales_data
+
 
 def validate_data(values):
     """ 
@@ -45,8 +58,9 @@ def validate_data(values):
             )
     except ValueError as e:
         print(f"Invalid data: {e}, please try again.\n")
+        return False
+
+    return True    
 
 
-
-
-get_sales_data()
+data = get_sales_data()
