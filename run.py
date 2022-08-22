@@ -4,6 +4,7 @@
 
 import gspread  # Python API for Google Sheets
 from google.oauth2.service_account import Credentials   # imports credentials from Google
+from pprint import pprint
 
 # scope lists the APIs that a programm access to run
 # SCOPE in capital is a constant
@@ -78,7 +79,29 @@ def update_sales_worksheet(data):
     print("Sales worksheet updated successfully.\n")
 
 
+def calculate_surplus_data(sales_row):
+    """
+    Compare sales with stock and calculate the surplus for each item type.
 
-data = get_sales_data()
-sales_data = [int(num) for num in data]
-update_sales_worksheet(sales_data)
+    The surplus is defined as the sales figure subtracted from the stock:
+    - Positive surplus indicates waste
+    - Negative surplus indicates extra made when stock was sold out.
+    """
+    print("Calculating surplus data...\n")
+    stock = SHEET.worksheet("stock").get_all_values()    #  this method is from gspread
+    # pprint(stock)                                      #  we need to install this pprint so the data is easy to read when printed to the terminal
+    stock_row = stock[-1]                                #  reminding that -1 means the last value of a list
+    print(stock_row)
+
+
+def main():
+    """
+    Run all program functions
+    """
+    data = get_sales_data()
+    sales_data = [int(num) for num in data]
+    update_sales_worksheet(sales_data)
+    calculate_surplus_data(sales_data)
+
+print("Welcome to love Sandwiches Data Automation")
+main()
