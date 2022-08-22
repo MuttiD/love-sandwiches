@@ -1,6 +1,7 @@
 # Your code goes here.
 # You can delete these comments, but do not change the name of this file
 # Write your code to expect a terminal of 80 characters wide and 24 rows high
+# stock = surplus - actual sales 
 
 import gspread  # Python API for Google Sheets
 from google.oauth2.service_account import Credentials   # imports credentials from Google
@@ -91,7 +92,16 @@ def calculate_surplus_data(sales_row):
     stock = SHEET.worksheet("stock").get_all_values()    #  this method is from gspread
     # pprint(stock)                                      #  we need to install this pprint so the data is easy to read when printed to the terminal
     stock_row = stock[-1]                                #  reminding that -1 means the last value of a list
-    print(stock_row)
+    #print(f"stock row: {stock_row}")
+    #print(f"sales row: {sales_row}")
+
+    
+    surplus_data = []                                   # define an empty list
+    for stock, sales in zip(stock_row, sales_row):     # this zip will automatically interate between the two lists (stock_row and sales_row)
+        surplus = int(stock) - sales
+        surplus_data.append(surplus)
+    
+    return surplus_data
 
 
 def main():
@@ -101,7 +111,8 @@ def main():
     data = get_sales_data()
     sales_data = [int(num) for num in data]
     update_sales_worksheet(sales_data)
-    calculate_surplus_data(sales_data)
+    new_surplus_data = calculate_surplus_data(sales_data)
+    print(new_surplus_data)
 
-print("Welcome to love Sandwiches Data Automation")
+print("Welcome to love Sandwiches Data Automation\n")
 main()
