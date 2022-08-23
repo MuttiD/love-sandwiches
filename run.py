@@ -5,7 +5,7 @@
 
 import gspread  # Python API for Google Sheets
 from google.oauth2.service_account import Credentials   # imports credentials from Google
-from pprint import pprint                               #  we need to install this pprint so the data is easy to read when printed to the terminal
+# from pprint import pprint                               #  we need to install this pprint so the data is easy to read when printed to the terminal
 
 # scope lists the APIs that a programm access to run
 # SCOPE in capital is a constant
@@ -35,7 +35,7 @@ def get_sales_data():
         print("Data should be six numbers, separated by commas.")
         print("Example: 10,20,30,40,50,60\n")           # \n will add a row here
 
-        data_str = input("Enter your data here: ")
+        data_str = input("Enter your data here: \n")        # add a line in the input section for deployment purposes
         #split method returns the broken up values as a list
         sales_data = data_str.split(",")
         
