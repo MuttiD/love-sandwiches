@@ -5,7 +5,7 @@
 
 import gspread  # Python API for Google Sheets
 from google.oauth2.service_account import Credentials   # imports credentials from Google
-from pprint import pprint
+from pprint import pprint                               #  we need to install this pprint so the data is easy to read when printed to the terminal
 
 # scope lists the APIs that a programm access to run
 # SCOPE in capital is a constant
@@ -102,6 +102,26 @@ def calculate_surplus_data(sales_row):
     
     return surplus_data
 
+def get_last_5_entries_sales():
+    """
+    Collects columns of data from sales worksheet, collecting
+    the last 5 entries for each sandwich and returns the data 
+    as a list of lists. 
+    """
+    sales = SHEET.worksheet("sales")
+    #column = sales.col_values(3)
+    #print(column)
+
+    columns = []                                    # creating an empty list
+    for ind in range(1, 7):
+        # print(ind)
+        column = sales.col_values(ind)
+        columns.append(column[-5:])                 # using slice method with the last 5 numbers.  
+                                                    # the colon ":" represents multiple values in the list
+    # pprint(columns)
+
+    return columns
+
 
 def main():
     """
@@ -117,4 +137,5 @@ def main():
     
 
 print("Welcome to love Sandwiches Data Automation\n")
-main()
+# main()
+sales_columns = get_last_5_entries_sales()
